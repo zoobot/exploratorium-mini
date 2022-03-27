@@ -1,0 +1,32 @@
+{
+  "name": "hi-dolly-twilio",
+  "version": "1.0.0",
+  "description": "hi-dolly-twilio",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha --timeout=90000 ./test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoobot/hi-dolly-twilio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zoobot/hi-dolly-twilio/issues"
+  },
+  "homepage": "https://github.com/zoobot/hi-dolly-twilio#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "logform": "^2.4.0",
+    "mongodb": "^4.4.1",
+    "mqtt": "^4.3.7",
+    "twilio": "^3.42.1",
+    "winston": "^3.6.0"
+  },
+  "devDependencies": {
+    "mocha": "^9.2.2",
+    "nodemon": "^2.0.15"
+  }
+}
