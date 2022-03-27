@@ -1,28 +1,15 @@
 const express = require('express');
-const logger = require('./logger');
+const logger = require('../logger');
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 const { config } = require('./config');
 const { handleTextOut, status } = require('./twilio-out-sms');
 const { handleTextIn, handleCallIn } = require('./twilio-in-twiml-autoreply');
+const { getImagesFromDb } = require('./db-images');
 const port = 3003;
 const host = process.argv[2] || config.host || 'localhost';
 
-const MongoClient = require("mongodb").MongoClient;
-
-var db;
-
-MongoClient.connect(
-  `mongodb://mongo:27017/${config.dbname}`,
-  (err, database) => {
-    if (err) return console.log(err);
-    db = database.db(config.dbname);
-    app.listen(process.env.PORT || 80, () => {
-      console.log("listening on 80");
-    });
-  }
-);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -46,9 +33,7 @@ app.get("/", (req, res) => {
   res.sendFile("index.html");
 });
 
-
 const gib = config?.gibberishString;
-
 // text and voice webhooks and sms status callback
 app.post(`/smsin/${gib}`, handleTextIn);
 app.post(`/callin/${gib}`, handleCallIn);
@@ -58,20 +43,7 @@ app.post(`/status/${gib}`, status);
 app.post(`/smsout/${gib}`, handleTextOut);
 
 // send text, image url to frontend
-app.get(`/newcalls/${gib}`, (req, res) => {
-  db.collection(config.collectionName)
-    .find()
-    .sort({ $natural: -1 })
-    .limit(5)
-    .toArray((err, result) => {
-      if (err) {
-        console.log(err);
-        res.status(404).send();
-        return;
-      }
-      res.send(result);
-    });
-});
+app.get(`/newcalls/${gib}`, getImagesFromDb);
 
-// const server = app.listen(port, () => logger.info(`listening at ${host}:${port}`));
-// module.exports = server; // for testing
+const server = app.listen(port, () => logger.info(`listening at ${host}:${port}`));
+module.exports = server; // for testing

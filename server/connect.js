@@ -16,4 +16,9 @@ const client = require('twilio')(apiKey, apiSecret, { accountSid: accountSid });
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
-module.exports = { client, MessagingResponse, VoiceResponse };
+
+module.exports = { 
+ client, 
+ MessagingResponse, 
+ VoiceResponse,
+};

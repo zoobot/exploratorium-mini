@@ -4,7 +4,7 @@
   "description": "hi-dolly-twilio",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server/index.js",
     "test": "mocha --timeout=90000 ./test/"
   },
   "repository": {
