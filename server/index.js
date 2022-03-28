@@ -7,6 +7,7 @@ const { config } = require('./config');
 const { handleTextOut, status } = require('./twilio-out-sms');
 const { handleTextIn, handleCallIn } = require('./twilio-in-twiml-autoreply');
 const { getImagesFromDb } = require('./db-images');
+const { handleWebIn } = require('./web-in');
 const port = 3003;
 const host = process.argv[2] || config.host || 'localhost';
 
@@ -44,6 +45,7 @@ app.post(`/smsout/${gib}`, handleTextOut);
 
 // send text, image url to frontend
 app.get(`/newcalls/${gib}`, getImagesFromDb);
+app.post(`/webin/${gib}`, handleWebIn);
 
 const server = app.listen(port, () => logger.info(`listening at ${host}:${port}`));
 module.exports = server; // for testing

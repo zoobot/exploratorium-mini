@@ -19,29 +19,35 @@ function getImagesFromDb(req, res) {
 }
 
 function createDbAndCollection() {
-  MongoClient.connect(url, function(err, db) {
+  return MongoClient.connect(url, function(err, db) {
     if (err) throw err;
+    // const existsDB = db.db.getMongo().getDBNames().indexOf(config.databaseName);
     var dbo = db.db(config.databaseName);
-    dbo.createCollection(config.collectionName, function(err, res) {
+    const exists = dbo.listCollections({ name: config.collectionName }).hasNext()
+    if (exists) return;
+    
+    return dbo.createCollection(config.collectionName, function(err, res) {
       if (err) throw err;
       console.log("Collection created!");
       db.close();
+      return;
     });
+    
   });
 }
 
-function insertText(reqBody) {
-  logger.info('reqBody',reqBody);
+function saveTextToDb(reqBody) {
+  const insertData = {...reqBody, done: 0};
   createDbAndCollection();
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db(config.databaseName);
     dbo.collection(config.collectionName).insertOne(insertData, function(err, res) {
       if (err) throw err;
-      console.log("1 document inserted");
+      console.log(`Inserted ${reqBody.From}--${reqBody.Body} -- Done: ${insertData.done}`);
       db.close();
     });
   });
 }
 
-module.exports = { createDbAndCollection, getImagesFromDb, insertText };
+module.exports = { createDbAndCollection, getImagesFromDb, saveTextToDb };
