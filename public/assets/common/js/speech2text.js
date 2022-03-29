@@ -232,10 +232,9 @@ async function saveToServer() {
     n = 40 + final_transcript.substring(40).indexOf(' ');
   }
   const sendData = {
-    From: 14152835202,
-    Subject: final_transcript.substring(0, n),
-    Body: final_transcript.substring(n + 1),
-    message: final_transcript
+    from: 'webform',
+    message: final_transcript,
+    timestamp: Date.now(),
   };
   console.log('sendData', sendData);
   const formDataJsonString = JSON.stringify(sendData);
@@ -247,15 +246,19 @@ async function saveToServer() {
    },
    body: formDataJsonString,
   };
-  const url = 'https://8c3279167f324d6ff97024136a9ba4ed.balena-devices.com/webin/gibberishy98234jkasjdnflkjaQTYU'
+  const endpoint = 'webin/CBI1-Thrav2EDPAyAGo2Cg';
+  const url = `${window.location}${endpoint}`;
   const response = await fetch(url, fetchOptions);
   console.log('response webin', response);
+
+  const body = await response.json();
+  console.log('response webin body', body)
   if (!response.ok) {
    const errorMessage = await response.text();
    throw new Error(errorMessage);
   }
 
-  return response.json();
+  return body;
 }
 
 function createEmail() {

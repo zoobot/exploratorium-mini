@@ -1,18 +1,20 @@
 const { config } = require('./config');
 const { MessagingResponse, VoiceResponse } = require('./connect');
-const { saveTextToDb } = require('./db-images');
+// const { saveTextToDb } = require('./mongo');
+const { saveTextToDb } = require('./db-sqliteb');
 const { inspect } = require('util');
 const logger = require('../logger');
 
 
 function handleTextIn(req, res){
   if (!req?.body?.Body.length) res.status(404).send({ Success: false });
-  const msgNospaces = req.body.Body.replace(/\s/g, '-');
+  const { From, Body, Timestamp } = req.body;
+  const msgNospaces = Body.replace(/\s/g, '-');
   const returnAutoText = `${config.outgoingMessageSMS}${msgNospaces}`;
   const twiml = new MessagingResponse();
   twiml.message(returnAutoText);
 
-  saveTextToDb(req.body);
+  saveTextToDb(From, Body, Timestamp);
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
   return;

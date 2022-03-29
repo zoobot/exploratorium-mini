@@ -18,11 +18,10 @@
   },
   "homepage": "https://github.com/zoobot/hi-dolly-twilio#readme",
   "dependencies": {
+    "better-sqlite3": "^7.5.0",
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "logform": "^2.4.0",
-    "mongodb": "^4.4.1",
-    "mqtt": "^4.3.7",
-    "sqlite3": "^4.2.0",
     "twilio": "^3.42.1",
     "winston": "^3.6.0"
   },

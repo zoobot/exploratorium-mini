@@ -17,7 +17,7 @@ function getImagesFromDb(req, res) {
     });
   });
 }
-
+ 
 function createDbAndCollection() {
   return MongoClient.connect(url, function(err, db) {
     if (err) throw err;

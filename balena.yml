@@ -1,0 +1,26 @@
+name: "twilio-block"
+description: "a twilio block"
+type: "sw.block"
+joinable: false
+post-provisioning: >-
+  ## Usage instructions
+  After flashing your device allow some time for the application to download.
+  Follow the instructions in the readme to set up the hardware: https://github.com/zoobot/twilio-block
+assets:
+  repository:
+    type: "blob.asset"
+    data:
+      url: "https://github.com/zoobot/twilio-block"
+  logo:
+    type: "blob.asset"
+    data:
+      url: "https://raw.githubusercontent.com/zoobot/twilio-block/main/logo.png"
+data:
+  defaultDeviceType: "raspberrypi3"
+  supportedDeviceTypes:
+    - raspberry-pi2
+    - raspberrypi3
+    - raspberrypi3-64
+    - raspberrypi4-64
+    - raspberrypi400-64
+    - fincm3
