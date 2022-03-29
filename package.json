@@ -1,7 +1,7 @@
 {
-  "name": "hi-dolly-twilio",
+  "name": "twilio-block",
   "version": "1.0.0",
-  "description": "hi-dolly-twilio",
+  "description": "twilio-block",
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zoobot/hi-dolly-twilio.git"
+    "url": "git+https://github.com/zoobot/twilio-block.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zoobot/hi-dolly-twilio/issues"
+    "url": "https://github.com/zoobot/twilio-block/issues"
   },
-  "homepage": "https://github.com/zoobot/hi-dolly-twilio#readme",
+  "homepage": "https://github.com/zoobot/twilio-block#readme",
   "dependencies": {
     "better-sqlite3": "^7.5.0",
     "cors": "^2.8.5",
