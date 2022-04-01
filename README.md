@@ -19,6 +19,9 @@ Or add the following service to your `docker-compose.yml`:
 
 ## Software
 
+[Web Speech Api](https://wicg.github.io/speech-api/)
+[Google Web Speech demo](https://www.google.com/chrome/demos/speech.html)
+
 The application logic:
 
 
