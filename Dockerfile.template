@@ -3,24 +3,10 @@
 # and about balena base images here: https://www.balena.io/docs/reference/base-images/base-images/
 FROM balenalib/%%BALENA_MACHINE_NAME%%-node:16-buster-run
 
-# use `install_packages` if you need to install dependencies,
-# for instance if you need git, just uncomment the line below.
-# RUN install_packages git
-# RUN wget -qO- https://twilio-cli-prod.s3.amazonaws.com/twilio_pub.asc \
-#   | sudo apt-key add -
-# RUN sudo touch /etc/apt/sources.list.d/twilio.list
-# RUN echo 'deb https://twilio-cli-prod.s3.amazonaws.com/apt/ /' \
-#   | sudo tee /etc/apt/sources.list.d/twilio.list
-# RUN sudo apt update
-# RUN sudo apt install -y twilio
-
-# RUN apt-get update && apt-get install -y python
-
-    # install node-gyp
+# install python3
 RUN apt-get update \
     && apt-get install --no-install-recommends -y python3 build-essential \
     && apt-get clean
-
 
 # Defines our working directory in container
 WORKDIR /usr/src/app
@@ -28,26 +14,17 @@ WORKDIR /usr/src/app
 # Copies the package.json first for better cache on later pushes
 COPY package*.json ./
 
-
-RUN yarn global add node-gyp
-RUN yarn install
-RUN yarn cache clean
-
-# This install npm dependencies on the balena build server,
-# making sure to clean up the artifacts it creates in order to reduce the image size.
-# RUN npm install -D --build-from-source --unsafe-perm=true --allow-root node-pre-gyp@latest
-# RUN npm install --build-from-source --unsafe-perm=true --allow-root sqlite3@latest
-# RUN npm install --build-from-source --unsafe-perm=true --allow-root sqlite@latest
-# RUN npm install -g --python=python2.7
-# RUN npm install -g --python=python3.7
-# RUN npm config set python python3.7
-# RUN npm install -g node-gyp@latest
-# RUN JOBS=MAX npm install --production --unsafe-perm && npm cache verify && rm -rf /tmp/*
-
-# RUN JOBS=MAX yarn install && rm -rf /tmp/*
-
 # This will copy all files in our root to the working directory in the container
 COPY . ./
+
+# RUN yarn global add node-gyp
+# RUN yarn install
+# RUN yarn cache clean
+
+RUN npm install node-gyp
+RUN npm install
+RUN npm cache clean
+
 
 # Enable udevd so that plugged dynamic hardware devices show up in our container.
 ENV UDEV=1

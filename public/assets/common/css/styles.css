@@ -1,3 +1,26 @@
+* {box-sizing: border-box;}
+body {
+  font-family: Verdana, sans-serif;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.browser-landing{
+  position: fixed;
+  bottom: 0;
+  color: black;
+}
+
+.mic{
+  border-radius: 50%;
+}
+
+.save-buttons {
+  background-color: gray;
+}
+
 #info {
  font-size: 20px;
  }
@@ -8,12 +31,17 @@
  text-decoration: none
  }
  #results {
- font-size: 14px;
- font-weight: bold;
- border: 1px solid #ddd;
- padding: 15px;
- text-align: left;
- min-height: 150px;
+  display:flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: end;
+  font-size: 14px;
+  font-weight: bold;
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: left;
+  min-height: 50px;
+  background: white;
  }
  #start_button {
  border: 0;

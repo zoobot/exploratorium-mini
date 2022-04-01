@@ -13,10 +13,9 @@ function handleTextIn(req, res){
   const returnAutoText = `${config.outgoingMessageSMS}${msgNospaces}`;
   const twiml = new MessagingResponse();
   twiml.message(returnAutoText);
-
-  saveTextToDb(From, Body, Timestamp);
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
+  saveTextToDb(From, Body, Timestamp);
   return;
 }
 

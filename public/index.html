@@ -22,22 +22,8 @@
   </head>
   <body class="" id="grid">
     <div class="browser-landing" id="main">
-      <div class="compact marquee-stacked" id="marquee">
-        <div class="marquee-copy">
-          <h1>
-            <a class="c1" href="https://github.com/zoobot/hidolly">Hi-Dolly</a>
-          </h1>
-        </div>
-      </div>
       <div class="compact marquee">
         <div id="info">
-          <p id="info_web_speech">
-            <a class="c1" href="http://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html">Web
-              Speech API</a> Demonstration
-          </p>
-          <p id="info_start">
-            Click on the microphone icon and begin speaking for as long as you like.
-          </p>
           <p id="info_speak_now" style="display:none">
             Speak now.
           </p>
@@ -66,7 +52,7 @@
             "https://www.google.com/chrome">Chrome</a> version 25 or later.
           </p>
         </div>
-        <div id="div_start">
+        <div id="div_start" class="mic">
           <button id="start_button" onclick="startButton(event)"><img alt="Start" id="start_img"
           src="assets/common/images/mic.gif"></button>
         </div>
@@ -77,25 +63,7 @@
         </div>
 
         <div id="copy">
-          <button class="button" id="copy_button" onclick="copyButton()">Copy and Paste</button>
-          <div id="copy_info">
-            <p>
-              Press Control-C to copy text.
-            </p>
-            <p>
-              (Command-C on Mac.)
-            </p>
-          </div>
-          <button class="button" id="email_button" onclick="emailButton()">Create
-          Email</button>
-          <div id="email_info">
-            <p>
-              Text sent to default email application.
-            </p>
-            <p>
-              (See chrome://settings/handlers to change.)
-            </p>
-          </div>
+          
           <button class="button" id="save_button" onclick="saveButton()">Save</button>
           <div id="save_info">
             <p>
@@ -131,16 +99,9 @@ var chrmMenuBar = new chrm.ui.MenuBar();
 
 
 
-      var doubleTracker = new gweb.analytics.DoubleTrack('floodlight', {
-          src: 2542116,
-          type: 'clien612',
-          cat: 'chrom0'
-      });
-      doubleTracker.track();
-
-      doubleTracker.trackClass('doubletrack', true);
     </script> 
     <script nonce="CBI1-Thrav2EDPAyAGo2Cg" src="assets/common/js/speech2text.js"></script>
- 
+    <script src="assets/common/js/imageloader.js"></script>
+    <script src="assets/common/js/motion.js"></script>
   </body>
 </html>

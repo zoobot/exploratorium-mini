@@ -7,9 +7,11 @@ app.use(express.urlencoded({extended: true}))
 const { config } = require('./config');
 const { handleTextOut, status } = require('./twilio-out-sms');
 const { handleTextIn, handleCallIn } = require('./twilio-in-twiml-autoreply');
-const { handleWebIn, handleWebOut } = require('./web');
-// const { initDb } = require('./db-sqliteb');
-// initDb();
+const { handleWebIn, handleWebOut, handleGetImages } = require('./web');
+const { motion } = require('./motion');
+// const {motionSensor} = require('./websocket-server');
+motion();
+// motionSensor();
 const port = 3003;
 const host = process.argv[2] || config.host || 'localhost';
 
@@ -66,6 +68,8 @@ app.get(`/newcalls/${gib}`, handleWebOut);
 app
   .post(`/webin/CBI1-Thrav2EDPAyAGo2Cg`, handleWebIn)
   .get(`/webin/CBI1-Thrav2EDPAyAGo2Cg`, handleWebOut);
+
+app.get(`/images/CBI1-Thrav2EDPAyAGo2Cg`, handleGetImages);
 
 const server = app.listen(port, () => logger.info(`listening at ${host}:${port}`));
 module.exports = server; // for testing

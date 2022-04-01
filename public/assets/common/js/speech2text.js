@@ -123,7 +123,6 @@ function updateCountry() {
   select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
 }
 
-var create_email = false;
 var final_transcript = '';
 var recognizing = false;
 var ignore_onend;
@@ -261,47 +260,14 @@ async function saveToServer() {
   return body;
 }
 
-function createEmail() {
-  var n = final_transcript.indexOf('\n');
-  if (n < 0 || n >= 80) {
-    n = 40 + final_transcript.substring(40).indexOf(' ');
-  }
-  var subject = encodeURI(final_transcript.substring(0, n));
-  var body = encodeURI(final_transcript.substring(n + 1));
-  window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
-}
-
-function copyButton() {
-  if (recognizing) {
-    recognizing = false;
-    recognition.stop();
-  }
-  copy_button.style.display = 'none';
-  copy_info.style.display = 'inline-block';
-  showInfo('');
-}
-
-function emailButton() {
-  if (recognizing) {
-    create_email = true;
-    recognizing = false;
-    recognition.stop();
-  } else {
-    createEmail();
-  }
-  email_button.style.display = 'none';
-  email_info.style.display = 'inline-block';
-  showInfo('');
-}
-
 function saveButton() {
   if (recognizing) {
     recognizing = false;
     recognition.stop();
   } 
   saveToServer();
-  // save_button.style.innerHTML = 'Saved';
-  save_info.style.display = 'inline-block';
+  save_button.style.innerHTML = 'Saved';
+  save_info.style.display = 'none';
   showInfo('');
  
 }
@@ -342,10 +308,6 @@ function showButtons(style) {
     return;
   }
   current_style = style;
-  copy_button.style.display = style;
-  email_button.style.display = style;
   save_button.style.display = style;
-  copy_info.style.display = 'none';
-  email_info.style.display = 'none';
   save_info.style.display = 'none';
 }

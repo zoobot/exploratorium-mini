@@ -1,18 +1,20 @@
 version: '2.1'
 
-# volumes:
-#     data
+volumes:
+    data:
 
 services:
   twilio-block:
     container_name: twilio-block
-    # build: ./twilio-block
     build: ./
     restart: always
+    privileged: true
     env_file:
       - ./config.env
+    environment:
+      - OUTPUT=17
+      - INPUT=4
     ports:
-      - "80:3003" # external/internal
-    # volumes:
-      # - 'data:/data/database'
-      # - '/usr/src/node_modules'
+      - "80:3003" # external/internal, remember right to left
+    volumes:
+      - 'data:/data/database'

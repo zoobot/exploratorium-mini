@@ -22,8 +22,11 @@
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "logform": "^2.4.0",
+    "onoff": "^6.0.3",
+    "say": "^0.16.0",
     "twilio": "^3.42.1",
-    "winston": "^3.6.0"
+    "winston": "^3.6.0",
+    "ws": "^8.5.0"
   },
   "devDependencies": {
     "mocha": "^9.2.2",
