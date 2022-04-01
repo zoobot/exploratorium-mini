@@ -17,9 +17,9 @@ COPY package*.json ./
 # This will copy all files in our root to the working directory in the container
 COPY . ./
 
-RUN yarn global add node-gyp
-RUN yarn install
-RUN yarn cache clean
+RUN yarn global add node-gyp --network-timeout 600000
+RUN yarn install --network-timeout 600000
+# RUN yarn cache clean
 
 # RUN npm install node-gyp
 # RUN npm install
