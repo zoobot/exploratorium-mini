@@ -10,10 +10,11 @@ var motion = new Gpio(17, 'in', 'both'); //use GPIO pin 17 as input, and 'both' 
 motion.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
   if (err) { //if an error
     console.error('There was an error', err); //output error message to console
-  return;
+    return;
   }
   server.on('connection', function(socket) {
-  socket.send(`motion on ${value}`);
+    socket.send(`motion on ${value}`);
+    socket.removeAllListeners(); 
   });
 
 
