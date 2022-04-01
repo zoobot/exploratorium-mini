@@ -1,4 +1,8 @@
 *.DS_Store
+
+# Sqlite Database
+*.db
+
 config.*
 *.env
 package-lock.json
