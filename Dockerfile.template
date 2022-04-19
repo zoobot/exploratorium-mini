@@ -8,6 +8,7 @@ RUN apt-get update \
     && apt-get install --no-install-recommends -y python3 build-essential \
     && apt-get clean
 
+
 # Defines our working directory in container
 WORKDIR /usr/src/app
 
@@ -24,6 +25,16 @@ RUN yarn install --network-timeout 600000
 # RUN npm install node-gyp
 # RUN npm install
 # RUN npm cache clean
+
+# piTFT
+RUN pip3 install adafruit-circuitpython-rgb-display
+RUN pip3 install --upgrade --force-reinstall spidev
+# RUN sudo pip3 install --upgrade adafruit-python-shell click
+# RUN sudo apt-get install -y git
+# RUN git clone https://github.com/adafruit/Raspberry-Pi-Installer-Scripts.git
+# RUN cd Raspberry-Pi-Installer-Scripts
+# RUN sudo python3 adafruit-pitft.py --display=st7789_240x240 --rotation=0 --install-type=console
+
 
 
 # Enable udevd so that plugged dynamic hardware devices show up in our container.

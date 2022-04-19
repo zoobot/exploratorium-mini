@@ -12,9 +12,17 @@ services:
     env_file:
       - ./config.env
     environment:
-      - OUTPUT=17
-      - INPUT=4
+      - OUTPUT=16
+      - INPUT=5
     ports:
       - "80:3003" # external/internal, remember right to left
     volumes:
       - 'data:/data/database'
+  fbcp:
+    image: bhcr.io/balenablocks/fbcp
+    privileged: true
+    environment:
+      - BALENA_HOST_CONFIG_hdmi_cvt=240 240 60 1 0 0 0
+      - BALENA_HOST_CONFIG_hdmi_force_hotplug=1
+      - BALENA_HOST_CONFIG_hdmi_group=2
+      - BALENA_HOST_CONFIG_hdmi_mode=87
