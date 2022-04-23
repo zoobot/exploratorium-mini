@@ -2,7 +2,7 @@ function setImages(image) {
     if (image) {
       const images = document.getElementById('images');
       innerImg = document.createElement('img');
-      innerImg.src = `assets/common/images/ai/${image}`;
+      innerImg.src = `assets/images/ai/${image}`;
       innerImg.className = 'hidolly-img';
       images.appendChild(innerImg);
     }

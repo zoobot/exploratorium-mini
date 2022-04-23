@@ -16,17 +16,17 @@ if (!('webkitSpeechRecognition' in window)) {
   recognition.onstart = function() {
     recognizing = true;
     showInfo('info_speak_now');
-    start_img.src = 'assets/common/images/mic-animate.gif';
+    start_img.src = 'assets/images/mic-animate.gif';
   };
 
   recognition.onerror = function(event) {
     if (event.error == 'no-speech') {
-      start_img.src = 'assets/common/images/mic.gif';
+      start_img.src = 'assets/images/mic.gif';
       showInfo('info_no_speech');
       ignore_onend = true;
     }
     if (event.error == 'audio-capture') {
-      start_img.src = 'assets/common/images/mic.gif';
+      start_img.src = 'assets/images/mic.gif';
       showInfo('info_no_microphone');
       ignore_onend = true;
     }
@@ -45,7 +45,7 @@ if (!('webkitSpeechRecognition' in window)) {
     if (ignore_onend) {
       return;
     }
-    start_img.src = 'assets/common/images/mic.gif';
+    start_img.src = 'assets/images/mic.gif';
     if (!final_transcript) {
       showInfo('info_start');
       return;
@@ -76,17 +76,21 @@ if (!('webkitSpeechRecognition' in window)) {
       }
     }
     final_transcript = capitalize(final_transcript);
-    final_span.innerHTML = linebreak(final_transcript);
-    interim_span.innerHTML = linebreak(interim_transcript);
-    if (sayStop(final_transcript, interim_transcript)) {
+    final_span.innerHTML = final_transcript;
+    interim_span.innerHTML = interim_transcript;
+    setTimeout(() => showInfo('info_save'), 2000);
+    
+    if (sayStop(interim_transcript) || sayStop(final_transcript)) {
       stop()
+    }
+    if (sayStop(final_transcript) && !recognizing) {
       saveToServer();
     }
+    
   };
 }
 
-const sayStop = (final_transcript, interim_transcript) => final_transcript.includes('stop' || 'shutup' || 'bye bye' || 'by by')
-  || interim_transcript.includes('stop' || 'shutup' || 'bye bye' || 'by by')
+const sayStop = (transcript) => transcript.includes('stop')
 
 function stop() {
   if (recognizing) {
@@ -95,24 +99,29 @@ function stop() {
   } 
 }
 
+// function finalizeTranscript() {
+//   // var n = final_transcript.indexOf('\n');
+//   // if (n < 0 || n >= 150) {
+//   //   n = 40 + final_transcript.substring(40).indexOf(' ');
+//   // }
+//   return final_transcript
+  
+// }
+
 async function saveToServer() {
-  var n = final_transcript.indexOf('\n');
-  if (n < 0 || n >= 80) {
-    n = 40 + final_transcript.substring(40).indexOf(' ');
-  }
-  const sendData = {
-    from: 'webform',
-    message: final_transcript,
-    timestamp: Date.now(),
-  };
-  const formDataJsonString = JSON.stringify(sendData);
+  console.log('saveToServer', final_transcript)
+  // finalizeTranscript()
   const fetchOptions = {
    method: "POST",
    headers: {
     "Content-Type": "application/json",
     "Accept": "application/json"
    },
-   body: formDataJsonString,
+   body: JSON.stringify({
+    from: 'webform',
+    message: final_transcript.replaceAll('stop', '').trim(),
+    timestamp: new Date().toISOString(),
+    }),
   };
   const endpoint = 'webin/CBI1-Thrav2EDPAyAGo2Cg';
   const url = new URL(endpoint, window.location);
@@ -128,22 +137,25 @@ async function saveToServer() {
 }
 
 // TEXT FORMATTING
-var two_line = /\n\n/g;
-var one_line = /\n/g;
-function linebreak(s) {
-  return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+const firstChar = /\S/;
+function capitalize(str) {
+  return str.replace(firstChar, (m) => m.toUpperCase());
 }
 
-var first_char = /\S/;
-function capitalize(s) {
-  return s.replace(first_char, function(m) { return m.toUpperCase(); });
+const randomIndex = (imageLength) => Math.floor(Math.random() * imageLength);
+
+function askForRandomStuff() {
+  const askStuff = ['Describe an animal you wish existed', 
+  'Describe yourself and what you are wearing', 
+  'Describe your favorite food',
+  'Describe an place you wish existed']
+  return askStuff[randomIndex(askStuff.length)];
 }
 
 function infoDirections(status) {
   return {
-    'info_speak_now': 'Describe yourself.',
-    'info_allow': 'Say "Stop" or "Bye bye" to end the session.',
-    'save_info': 'Say "Stop" or "Bye bye" to end the session.',
+    'info_speak_now': askForRandomStuff(),
+    'info_save': 'Say "Stop" to end the session.',
     'info_no_speech': `No speech was detected. You may need to adjust your <a href=
       "https://support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone
       settings</a>.`,
@@ -161,12 +173,8 @@ function infoDirections(status) {
 
 function showInfo(status) {
   if (status) {
-    console.log(status)
     const temp = document.getElementById("info");
-    innerdiv = document.createElement('p');
-    temp.appendChild(innerdiv);
-    innerdiv.innerText = infoDirections(status);
-    console.log(innerdiv.innerText)
+    temp.innerText = infoDirections(status);
   }
 }
 
@@ -181,6 +189,6 @@ function startButton(event) {
   ignore_onend = false;
   final_span.innerHTML = '';
   interim_span.innerHTML = '';
-  // start_img.src = 'assets/common/images/mic-animated.gif';
+  // start_img.src = 'assets/images/mic-animated.gif';
   start_timestamp = event.timeStamp;
 }
