@@ -14,15 +14,13 @@ const { handleWebIn, handleWebOut, handleGetImages } = require('./web');
 const port = 3003;
 const host = process.argv[2] || config.host || 'localhost';
 
-if (host === 'localhost') {
+if (host !== 'localhost') {
   const { motionSensor } = require('./motion-sensor');
   motionSensor(wsServer);
 } else {
   const { motionSensorFake } = require('./motion-sensor');
   motionSensorFake(wsServer);
 }
-
-// motionSensor();
 
 // this is for whitelisting hosts for cors
 const whitelist = [
