@@ -37,7 +37,6 @@ async function getAllFromDb() {
    const query = `SELECT * FROM ${config.tableName}`;
    const stmt =  db.prepare(query);
    const response = stmt.all();
-   console.log(`getAllFromDb response ${inspect(response, false, 10, true)}`);
    return response;
   } catch (err) {
     console.error(`Error: ${inspect(err, false, 3, true)}`);

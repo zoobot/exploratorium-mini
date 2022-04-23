@@ -1,6 +1,5 @@
 const { config } = require('./config');
 const { MessagingResponse, VoiceResponse } = require('./connect');
-// const { saveTextToDb } = require('./mongo');
 const { saveTextToDb } = require('./db-sqliteb');
 const { inspect } = require('util');
 const logger = require('../logger');

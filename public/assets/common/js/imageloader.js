@@ -1,10 +1,12 @@
-function setBackground(image) {
-    var body = document.getElementById('grid');
-    imagePath = `url(assets/common/images/ai/${image})`;
-    console.log('imagePath',imagePath);
-    body.style.backgroundImage = imagePath;;
-    console.log(body.style);
-}
+function setImages(image) {
+    if (image) {
+      const images = document.getElementById('images');
+      innerImg = document.createElement('img');
+      innerImg.src = `assets/common/images/ai/${image}`;
+      innerImg.className = 'hidolly-img';
+      images.appendChild(innerImg);
+    }
+  }
 
 async function fetchImagesToServer() {
     const fetchOptions = {
@@ -15,16 +17,15 @@ async function fetchImagesToServer() {
      },
     };
     const endpoint = 'images/CBI1-Thrav2EDPAyAGo2Cg';
-    const url = `${window.location}${endpoint}`;
+    const url = new URL(endpoint, window.location);
     const response = await fetch(url, fetchOptions);
     const body = await response.json();
     if (!response.ok) {
      const errorMessage = await response.text();
      throw new Error(errorMessage);
     }
-    const imageLength = body.Images.length;
-    const randomImage = Math.floor(Math.random() * imageLength);
-    setBackground(body.Images[randomImage]);
+    body.images.map(image => setImages(image));
     return body;
   }
+
   fetchImagesToServer()

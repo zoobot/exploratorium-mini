@@ -2,18 +2,27 @@ const express = require('express');
 const logger = require('../logger');
 const app = express();
 const cors = require('cors');
+const ws = require('ws');
+const wsServer = new ws.Server({ noServer: true });
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 const { config } = require('./config');
 const { handleTextOut, status } = require('./twilio-out-sms');
 const { handleTextIn, handleCallIn } = require('./twilio-in-twiml-autoreply');
 const { handleWebIn, handleWebOut, handleGetImages } = require('./web');
-const { motion } = require('./motion');
-// const {motionSensor} = require('./websocket-server');
-motion();
-// motionSensor();
+
 const port = 3003;
 const host = process.argv[2] || config.host || 'localhost';
+
+if (host === 'localhost') {
+  const { motionSensor } = require('./motion-sensor');
+  motionSensor(wsServer);
+} else {
+  const { motionSensorFake } = require('./motion-sensor');
+  motionSensorFake(wsServer);
+}
+
+// motionSensor();
 
 // this is for whitelisting hosts for cors
 const whitelist = [
@@ -48,7 +57,7 @@ app.use( (err, req, res, next) =>{
   res.render('error', { error: err })
 }); 
 
-app.set("view engine", "ejs");
+// app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.get("/", (req, res) => {
   res.sendFile("index.html");
@@ -72,4 +81,19 @@ app
 app.get(`/images/CBI1-Thrav2EDPAyAGo2Cg`, handleGetImages);
 
 const server = app.listen(port, () => logger.info(`listening at ${host}:${port}`));
-module.exports = server; // for testing
+
+wsServer.on('connection', socket => {
+  socket.on('message', message => console.log(message));
+});
+
+// `server` is a vanilla Node.js HTTP server, so use
+// the same ws upgrade process described here:
+// https://www.npmjs.com/package/ws#multiple-servers-sharing-a-single-https-server
+
+server.on('upgrade', (request, socket, head) => {
+  wsServer.handleUpgrade(request, socket, head, socket => {
+    wsServer.emit('connection', socket, request);
+  });
+});
+
+module.exports = {server, wsServer}; // for testing

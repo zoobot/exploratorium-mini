@@ -1,80 +1,117 @@
-* {box-sizing: border-box;}
-body {
-  font-family: Verdana, sans-serif;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+body { 
+  margin: 0; 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+  font-size: 1rem;
+  overflow:hidden;
+  background-color: #0093E9;
+  background-image: linear-gradient(180deg, #0093E9 0%, #80D0C7 100%);  
 }
 
-.browser-landing{
+.hidolly-input{
+  background-color: white;
+  border-top:#333 2px ridge;
+  border-style: ridge;
+  position: fixed;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+}
+
+.interim {
+  color: gray;
+ }
+
+.final {
+  color: black;
+  padding-right: 2rem;
+}
+
+.button {
+  display: none;
+  margin: 2rem;
+  align-items: right;
+}
+
+.inputs {
+  margin: 1rem auto;
   position: fixed;
   bottom: 0;
-  color: black;
+  right: 0;
+  width: 100%;
 }
 
-.mic{
+
+.hidolly-img {
+  width: 50%;
+}
+
+input[type="text"] {
+  width: 200px;
+  height: 20px;
+  padding-right: 50px;
+}
+
+input[type="submit"] {
+  margin-left: -50px;
+  height: 25px;
+  width: 50px;
+  background: blue;
+  color: white;
+  border: 0;
+  -webkit-appearance: none;
+}
+
+#start_button {
+  border: 0;
+  background-color:transparent;
+  padding: 0;
+}
+
+#buttons {
+  margin: 10px 0;
+  position: relative;
+  top: -50px;
+}
+ 
+#copy {
+  margin-top: 20px;
+}
+ 
+#copy > div {
+  display: none;
+  margin: 0 70px;
+}
+
+.mic {
   border-radius: 50%;
+  margin: 10px 20px 10px;
 }
 
 .save-buttons {
   background-color: gray;
 }
 
-#info {
- font-size: 20px;
- }
- #div_start {
+.info {
+  margin-left: 10px;
+}
+
+#div_start {
  float: right;
- }
- #headline {
+}
+#headline {
  text-decoration: none
- }
- #results {
+}
+
+#results {
   display:flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: end;
   font-size: 14px;
   font-weight: bold;
-  border: 1px solid #ddd;
-  padding: 5px;
+  border: 0;
+  padding: 0 10px;
   text-align: left;
   min-height: 50px;
   background: white;
- }
- #start_button {
- border: 0;
- background-color:transparent;
- padding: 0;
- }
- .interim {
- color: gray;
- }
- .final {
- color: black;
- padding-right: 3px;
- }
- .button {
- display: none;
- }
- .marquee {
- margin: 20px auto;
- }
-
- #buttons {
- margin: 10px 0;
- position: relative;
- top: -50px;
- }
-
- #copy {
- margin-top: 20px;
- }
-
- #copy > div {
- display: none;
- margin: 0 70px;
- }
-
- a.c1 {font-weight: normal;}
+}

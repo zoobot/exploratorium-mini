@@ -17,7 +17,7 @@ services:
     ports:
       - "80:3003" # external/internal, remember right to left
     volumes:
-      - 'database:/database'
+      - 'data:/data'
   fbcp:
     image: bhcr.io/balenablocks/fbcp
     privileged: true

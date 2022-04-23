@@ -16,90 +16,32 @@
     <title>
       Hi-Dolly
     </title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet" nonce="CBI1-Thrav2EDPAyAGo2Cg">
-    <link href="assets/common/css/chrome.min.css" rel="stylesheet" nonce="CBI1-Thrav2EDPAyAGo2Cg">
+    <link href="assets/common/css/chrome.min.css" rel="stylesheet" >
     <link rel="stylesheet" href="assets/common/css/styles.css" />
   </head>
   <body class="" id="grid">
-    <div class="browser-landing" id="main">
-      <div class="compact marquee">
-        <div id="info">
-          <p id="info_speak_now" style="display:none">
-            Speak now.
-          </p>
-          <p id="info_no_speech" style="display:none">
-            No speech was detected. You may need to adjust your <a href=
-            "https://support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone
-            settings</a>.
-          </p>
-          <p id="info_no_microphone" style="display:none">
-            No microphone was found. Ensure that a microphone is installed and that
-            <a href="https://support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
-            microphone settings</a> are configured correctly.
-          </p>
-          <p id="info_allow" style="display:none">
-            Click the "Allow" button above to enable your microphone.
-          </p>
-          <p id="info_denied" style="display:none">
-            Permission to use microphone was denied.
-          </p>
-          <p id="info_blocked" style="display:none">
-            Permission to use microphone is blocked. To change, go to
-            chrome://settings/contentExceptions#media-stream
-          </p>
-          <p id="info_upgrade" style="display:none">
-            Web Speech API is not supported by this browser. Upgrade to <a href=
-            "https://www.google.com/chrome">Chrome</a> version 25 or later.
-          </p>
+    <div class="hidolly-main" id="main">
+      <div id="images" class="images">
+      </div>
+      <div class="hidolly-input">
+        <div id="info" class="info">
         </div>
+
         <div id="div_start" class="mic">
-          <button id="start_button" onclick="startButton(event)"><img alt="Start" id="start_img"
-          src="assets/common/images/mic.gif"></button>
+          <button id="start_button" onclick="startButton(event)">
+            <img alt="Start" id="start_img" src="assets/common/images/mic.gif">
+          </button>
         </div>
 
         <div id="results">
-          <span class="final" id="final_span"></span> <span class="interim" id=
-          "interim_span"></span>
+          <span class="final" id="final_span"></span> 
+          <span class="interim" id="interim_span"></span>
         </div>
 
-        <div id="copy">
-          
-          <button class="button" id="save_button" onclick="saveButton()">Save</button>
-          <div id="save_info">
-            <p>
-              Saved
-            </p>
-          </div>
-        </div>
-
-        <div class="compact marquee" id="div_language">
-          <select id="select_language" onchange="updateCountry()">
-            </select>&nbsp;&nbsp; <select id="select_dialect">
-            </select>
-        </div>
       </div>
-    </div><script src="assets/common/js/chrome.min.js" nonce="CBI1-Thrav2EDPAyAGo2Cg">
-</script> <script nonce="CBI1-Thrav2EDPAyAGo2Cg">
-var chrmMenuBar = new chrm.ui.MenuBar();
-      chrmMenuBar.decorate('nav');
-      var chrmLogo = new chrm.ui.Logo('logo');
-
-      var chrmscroll = new chrm.ui.SmoothScroll('scroll');
-      chrmscroll.init();
-
-
-
-  window.___gcfg = { lang: 'en' };
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'assets/common/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-
-
-
-
-    </script> 
+    </div>
+    
+    <script src="assets/common/js/chrome.min.js" nonce="CBI1-Thrav2EDPAyAGo2Cg"></script>
     <script nonce="CBI1-Thrav2EDPAyAGo2Cg" src="assets/common/js/speech2text.js"></script>
     <script src="assets/common/js/imageloader.js"></script>
     <script src="assets/common/js/motion.js"></script>
