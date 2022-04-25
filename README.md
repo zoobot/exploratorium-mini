@@ -13,6 +13,8 @@ The datasets for image generation have been gathered from all around the web, ge
 
 ![HiDolly](assets/hidolly.png)
 
+Thanks to [nucleardreamer](https://github.com/nucleardreamer) for being my guide through the residency!
+
 ### What you will need:
 - [Raspberry Pi](https://www.aliexpress.com/item/4000130040254.html?key=a7e37b5f6ff1de9cb410158b1013e54a&prodOvrd=RAC&opt=false&aff_fcid=4d2d920f11ef4078804fb898b3aa854b-1638805157605-08626-_9xk30H&tt=CPS_NORMAL&aff_fsk=_9xk30H&aff_platform=shareComponent-detail&sk=_9xk30H&aff_trace_key=4d2d920f11ef4078804fb898b3aa854b-1638805157605-08626-_9xk30H&terminal_id=5408ef9d287140f483e79c70c12dadf0)
 - [PIR motion sensor](https://learn.adafruit.com/pir-passive-infrared-proximity-motion-sensor/)
@@ -139,14 +141,24 @@ If you can, get an NVIDIA GPU and it will make your exploration way easier if yo
 
 When you are doing exploration, Google Colab is super nice. You can hook up a rest server to it and just hit your endpoints there. Granted you have to have the Colab running, but still, its fast for exploratory purposes.
 
+### PYTHON
+
+For raspberry pi devices, expect to bang your head against python 2 and 3 library support. I spent a good amount of time mashing keyboard and staring at the dockers building to get just the right python library installed in a very specific order and combination for balena images. Just keep at it, and if its 3am, day 17 of library confusion, might be worth solving your issue in a different way. 
+
+
+## Thanks
 
 Thanks for showing the way internet people!
 
 - [Openai](https://openai.com/)
 - [Laion discord](https://discord.com/invite/UxX8dv5KMh)
+- [Katherine Crowson](https://github.com/crowsonkb)
 - [saharmor](https://github.com/saharmor/dalle-playground) 
 - [borisdayma](https://github.com/borisdayma/dalle-mini)
+ 
+many more thanks to come
 
+## Output
 
 ### Some Images generated with [latent-diffusion](https://github.com/CompVis/latent-diffusion)
 
