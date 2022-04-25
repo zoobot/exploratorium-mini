@@ -102,8 +102,36 @@ Setup the DALLE-mini playground for a fast pickup starter backend
 - [dalle-playground](https://github.com/zoobot/dalle-playground)
 
 
+## Model downloads
+
+- [ru-dalle](https://dall-3.com/models/guided-diffusion/ru-dalle/)
+- [dall-3](https://dall-3.com/models/)
+- [latent-diffusion](http://ommer-lab.com/files/latent-diffusion/)
 
 ## Gotchas
+
+### Models on a device
+
+It's pretty time consuming to re-download the models on a device for every docker rebuild.
+
+You can scp the models to the device and set up the folder as a volume. Read the docs for this!! Its located HERE: /var/lib/docker/volumes/<APP ID>_data/_data/
+
+
+```
+scp -p 22 models/* <your_device_ip>:/var/lib/docker/volumes/<APP ID>_data/_data/
+```
+
+- [persistent storage](https://www.balena.io/docs/learn/develop/runtime/#persistent-storage)
+
+
+Some Valid ways to ssh to the device:
+
+```
+balena ssh <your_device_id>.local
+balena ssh <your_device_id>.local servicename
+ssh -P 22222 <your_device_ip>
+```
+
 
 ### Config files! 
 
