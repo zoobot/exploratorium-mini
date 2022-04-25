@@ -2,7 +2,7 @@
 
 ## First Round Mini Exploratorium
 
-![Mini Exploratorium](logo.png)
+![Mini Exploratorium](https://raw.githubusercontent.com/zoobot/hidolly/main/logo.png)
 
 ## Intro
 
