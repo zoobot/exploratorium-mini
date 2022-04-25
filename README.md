@@ -143,7 +143,7 @@ When you are doing exploration, Google Colab is super nice. You can hook up a re
 
 ### PYTHON
 
-For raspberry pi devices, expect to bang your head against python 2 and 3 library support. I spent a good amount of time mashing keyboard and staring at the dockers building to get just the right python library installed in a very specific order and combination for balena images. Just keep at it, and if its 3am, day 17 of library confusion, might be worth solving your issue in a different way. 
+For raspberry pi devices, expect to bang your head against python 2 and 3 library support. I spent a good amount of time mashing keyboard and staring at the dockers building to get just the right python library installed in a very specific order and combination for balena images. Just keep at it, and if its 3am, day 17 of library confusion, might be worth solving your issue in a different way. That being said, you are going to need to use Python to absorb all the awesome generative code bases, so make sure you solve your issue in a different way using Python. AI researchers use python. :)
 
 
 ## Thanks
