@@ -33,12 +33,6 @@ function handleCallIn(req, res){
   logger.verbose(`handleCallIn isThisVoice ${inspect(isThisVoice, false, 10, true)}`);
   res.end(isThisVoice);
   return;
-
-
-  // client.transcriptions('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-  //     .fetch()
-  //     .then(transcription => console.log(transcription.dateCreated));
-
 }
 
 module.exports = { handleTextIn, handleCallIn };

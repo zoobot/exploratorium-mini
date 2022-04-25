@@ -30,6 +30,7 @@ const whitelist = [
 
 const options = {
   origin(origin, callback) {
+    console.log('origin', origin)
     if (!origin || whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -63,7 +64,18 @@ app.get("/", (req, res) => {
 
 const gib = config?.gibberishString;
 // text and voice webhooks and sms status callback
-app.post(`/smsin/${gib}`, handleTextIn);
+app.post(`/smsin/${gib}`, (req, res) => {
+  
+  wsServer.on('connection', function connection(ws) {
+    ws.send(JSON.stringify({
+      phone: req.body.From, 
+      body: req.body.Body,
+      timestamp: req.body.Timestamp,
+    }));
+  });
+  handleTextIn(req, res);
+});
+
 app.post(`/callin/${gib}`, handleCallIn);
 app.post(`/status/${gib}`, status);
 

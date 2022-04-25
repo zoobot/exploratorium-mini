@@ -10,10 +10,19 @@ function motionSensor(wsServer) {
     if (err) { //if an error
       console.error('There was an error', err); //output error message to console
       return;
-    }  
-    wsServer.clients.forEach(function each(client) {
-      client.send("broadcast: spanner " + spanner_id + " updated");
-    });   
+    }   
+    wsServer.on('connection', function connection(ws) {
+      ws.on('msg', function message(data) {
+        console.log('received: %s', data);
+      });
+    
+      if (value === 1) {
+        ws.send(ws.send(JSON.stringify({
+          motion: value,
+          timestamp: new Date().toISOString(),
+        })))
+      };
+    });  
   });
 
   function unexportOnClose(LED, motion) { //function to run when exiting program

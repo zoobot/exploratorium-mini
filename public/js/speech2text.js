@@ -16,6 +16,7 @@ if (!('webkitSpeechRecognition' in window)) {
   recognition.onstart = function() {
     recognizing = true;
     showInfo('info_speak_now');
+    setTimeout(() => showInfo('info_save'), 4000);
     start_img.src = 'assets/images/mic-animate.gif';
   };
 
@@ -47,10 +48,11 @@ if (!('webkitSpeechRecognition' in window)) {
     }
     start_img.src = 'assets/images/mic.gif';
     if (!final_transcript) {
-      showInfo('info_start');
+      // showInfo('info_start');
       return;
     }
-    showInfo('');
+    // showInfo('');
+    showInfo('info_stopped');
     if (window.getSelection) {
       window.getSelection().removeAllRanges();
       var range = document.createRange();
@@ -78,13 +80,13 @@ if (!('webkitSpeechRecognition' in window)) {
     final_transcript = capitalize(final_transcript);
     final_span.innerHTML = final_transcript;
     interim_span.innerHTML = interim_transcript;
-    setTimeout(() => showInfo('info_save'), 2000);
     
     if (sayStop(interim_transcript) || sayStop(final_transcript)) {
       stop()
     }
     if (sayStop(final_transcript) && !recognizing) {
       saveToServer();
+      fetchImagesToServer(final_transcript, 'dalle', true);
     }
     
   };
@@ -99,33 +101,33 @@ function stop() {
   } 
 }
 
-// function finalizeTranscript() {
-//   // var n = final_transcript.indexOf('\n');
-//   // if (n < 0 || n >= 150) {
-//   //   n = 40 + final_transcript.substring(40).indexOf(' ');
-//   // }
-//   return final_transcript
-  
-// }
+const optionsLocalBackend = (() => {
+  return {
+    method: "POST",
+    headers: {
+     "Content-Type": "application/json",
+     "Accept": "application/json"
+    },
+    body: JSON.stringify({
+     from: 'webform',
+     message: final_transcript.replaceAll('stop', '').trim(),
+     timestamp: new Date().toISOString(),
+     }),
+  }
+});;
 
 async function saveToServer() {
   console.log('saveToServer', final_transcript)
-  // finalizeTranscript()
-  const fetchOptions = {
-   method: "POST",
-   headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json"
-   },
-   body: JSON.stringify({
-    from: 'webform',
-    message: final_transcript.replaceAll('stop', '').trim(),
-    timestamp: new Date().toISOString(),
-    }),
-  };
+  const fetchOptions = optionsLocalBackend();
   const endpoint = 'webin/CBI1-Thrav2EDPAyAGo2Cg';
-  const url = new URL(endpoint, window.location);
+  const url = new URL(endpoint, window.location)
+  console.log('url',url)
   const response = await fetch(url, fetchOptions);
+
+  if (!response.ok) {
+   const errorMessage = await response.text();
+   throw new Error(errorMessage);
+  }
 
   const body = await response.json();
   if (!response.ok) {
@@ -133,7 +135,7 @@ async function saveToServer() {
    throw new Error(errorMessage);
   }
 
-  return body;
+  return info;
 }
 
 // TEXT FORMATTING
@@ -156,18 +158,16 @@ function infoDirections(status) {
   return {
     'info_speak_now': askForRandomStuff(),
     'info_save': 'Say "Stop" to end the session.',
-    'info_no_speech': `No speech was detected. You may need to adjust your <a href=
-      "https://support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone
-      settings</a>.`,
+    'info_stopped': 'To start again, wave your hand at the motion detector or tap the microphone',
+    'info_no_speech': `No speech was detected. You may need to adjust your microphone settings.`,
     'info_no_support': `Your browser does not support this demo.`,
     'info_no_microphone': `No microphone was found. Ensure that a microphone is installed and that 
-      <a href="chrome://settings/contentExceptions#media-stream">microphone settings</a>
-      are configured correctly.`,
+        microphone settings are configured correctly.`,
     'info_denied': `Permission to use microphone was denied.`,
     'info_blocked': `Permission to use microphone is blocked. To change, go to
       chrome://settings/contentExceptions#media-stream`,
-    'info_upgrade': `Web Speech API is not supported by this browser. Upgrade to <a href=
-      "https://www.google.com/chrome">Chrome</a> version 25 or later.`,
+    'info_upgrade': `Web Speech API is not supported by this browser. 
+      Upgrade to Chrome version 25 or later.`,
   }[status];
 }
 
