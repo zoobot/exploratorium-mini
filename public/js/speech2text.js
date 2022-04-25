@@ -85,7 +85,7 @@ if (!('webkitSpeechRecognition' in window)) {
       stop()
     }
     if (sayStop(final_transcript) && !recognizing) {
-      saveToServer();
+      saveToServer('webin', final_transcript);
       fetchImagesToServer(final_transcript, 'dalle', true);
     }
     
@@ -101,42 +101,6 @@ function stop() {
   } 
 }
 
-const optionsLocalBackend = (() => {
-  return {
-    method: "POST",
-    headers: {
-     "Content-Type": "application/json",
-     "Accept": "application/json"
-    },
-    body: JSON.stringify({
-     from: 'webform',
-     message: final_transcript.replaceAll('stop', '').trim(),
-     timestamp: new Date().toISOString(),
-     }),
-  }
-});;
-
-async function saveToServer() {
-  console.log('saveToServer', final_transcript)
-  const fetchOptions = optionsLocalBackend();
-  const endpoint = 'webin/CBI1-Thrav2EDPAyAGo2Cg';
-  const url = new URL(endpoint, window.location)
-  console.log('url',url)
-  const response = await fetch(url, fetchOptions);
-
-  if (!response.ok) {
-   const errorMessage = await response.text();
-   throw new Error(errorMessage);
-  }
-
-  const body = await response.json();
-  if (!response.ok) {
-   const errorMessage = await response.text();
-   throw new Error(errorMessage);
-  }
-
-  return info;
-}
 
 // TEXT FORMATTING
 const firstChar = /\S/;
@@ -190,5 +154,5 @@ function startButton(event) {
   final_span.innerHTML = '';
   interim_span.innerHTML = '';
   // start_img.src = 'assets/images/mic-animated.gif';
-  start_timestamp = event.timeStamp;
+  start_timestamp = event.timeStamp || Date.now();
 }

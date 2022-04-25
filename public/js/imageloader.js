@@ -65,7 +65,7 @@ function parseReviver(key, value) {
 }
 
 async function fetchImagesToServer(final_transcript, source = 'local', reload = false, phone = null) {
-  console.log('fetchImagesToServer', final_transcript, source, reload)
+  console.log('fetchImagesToServer', final_transcript, source, reload, phone)
 
   const queryStartTime = new Date().getTime();
   setTime(' ', source);
@@ -90,8 +90,8 @@ async function fetchImagesToServer(final_transcript, source = 'local', reload = 
   body.images.map(image => setImages(image, source));
   
   if (body?.executionTime) setBackgroundColor('hidolly-time');
-  if (phone) returnSms(phone, body.executionTime, body.images);
+  if (phone) saveToServer('smsimage', final_transcript, phone, body.images);
   return body;
 }
 
-  fetchImagesToServer('none','local',false)
+fetchImagesToServer('none','local',false)

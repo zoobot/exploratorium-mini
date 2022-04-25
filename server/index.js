@@ -70,7 +70,7 @@ app.post(`/smsin/${gib}`, (req, res) => {
     ws.send(JSON.stringify({
       phone: req.body.From, 
       body: req.body.Body,
-      timestamp: req.body.Timestamp,
+      timeStamp: req.body.Timestamp,
     }));
   });
   handleTextIn(req, res);

@@ -4,8 +4,7 @@
   "description": "twilio-block",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "test": "mocha --timeout=90000 ./test/"
+    "start": "node server/index.js localhost"
   },
   "repository": {
     "type": "git",

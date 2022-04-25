@@ -19,7 +19,7 @@ function motionSensor(wsServer) {
       if (value === 1) {
         ws.send(ws.send(JSON.stringify({
           motion: value,
-          timestamp: new Date().toISOString(),
+          timeStamp: new Date().toISOString(),
         })))
       };
     });  
@@ -42,7 +42,11 @@ function motionSensorFake(wsServer) {
       console.log('received: %s', data);
     });
   
-    ws.send('something');
+    ws.send(JSON.stringify({
+      fake: true,
+      motion: 1,
+      timeStamp: new Date().toISOString(),
+    }));
   }); 
 
 }
