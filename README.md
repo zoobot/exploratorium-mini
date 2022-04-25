@@ -47,7 +47,7 @@ outgoingMessageSMS: 'Hi Dolly! We are generating your image: ',
 ### General
 ```
 host # This is your balena public url
-gibberishString
+gibberishString # gibberish string on endpoints, maybe it gets hacked less
 imageFolder: './public/assets/images/ai/',
 ```
 
@@ -61,15 +61,15 @@ tableName: 'hidolly',
 
 ## Software
 
-[Web Speech Api](https://wicg.github.io/speech-api/)
-[Google Web Speech demo](https://www.google.com/chrome/demos/speech.html)
-[Google colab](https://colab.research.google.com/notebooks/welcome.ipynb)
-[OpenAI](https://openai.com/blog/dall-e/)
+- [Web Speech Api](https://wicg.github.io/speech-api/)
+- [Google Web Speech demo](https://www.google.com/chrome/demos/speech.html)
+- [Google colab](https://colab.research.google.com/notebooks/welcome.ipynb)
+- [OpenAI](https://openai.com/blog/dall-e/)
 
 ## Assembly
 
 check the assets folder for the pinout diagram
-[Raspberry Pi pinout](https://pinout.xyz/pinout/raspberrypi_3b_pinout.svg)
+![Raspberry Pi pinout](https://pinout.xyz/pinout/raspberrypi_3b_pinout.svg)
 
 Schematic:
 
@@ -96,6 +96,162 @@ yarn install
 nodemon server/index.js localhost
 ```
 
-Setup google colab:
+Setup the DALLE-mini playground for a fast pickup starter backend
 
-[DALLE-mini](https://colab.research.google.com/drive/1JXL17AycxEkLHQz0vUzfScidVURfeyhD)
+- [DALLE-mini colab backend](https://colab.research.google.com/drive/1JXL17AycxEkLHQz0vUzfScidVURfeyhD)
+- [dalle-playground](https://github.com/zoobot/dalle-playground)
+
+
+
+## Gotchas
+
+### Config files! 
+
+You will need the config.js as an exported object in your server folder. Its godd to read up on balena configs because it's not entirely straightforward.
+
+Basically the balena.yml is a config file that will replace configs and envs when you deploy from hub. It does not work on cli at this time so you'd need to either put the configs in your docker-compose environment or make the config.js.
+
+You can manually add, remove, change envs from the CLI but you cannot change the config.txt via CLI. You have to do it in the cloud on the device. This can definitely cause slow development for displays as you have to wait for the whole device to rebuild on change. You can edit the config.txt when sd is attached for etching.
+
+You can also ssh into the balena os and check the config.txt at /mnt/boot. It's not editable though as it will get written over by the cloud config. I believe the order of precidence is balena.yml(if you deployed with the deploy button), then cloud config.
+
+```
+balena ssh localip
+cat /mnt/boot/config.txt
+```
+
+[balena cli envs](https://www.balena.io/docs/reference/balena-cli/#envs)
+
+[raspberry pi config.txt](https://www.raspberrypi.com/documentation/computers/config_txt.html)
+
+
+### GPU/NVIDIA
+
+Most image generation and ai in general is run on GPUs using NVidia's Cuda. Almost all open source projects are using cuda, few have a CPU fallback and if they do, it's slow. The M1 is supposed to be faster for machine learning projects but the code bases out there have not really caught up. For the Intel NUC, you can use OpenGL but it'll require a bunch of code changes for most DALLE offshoot repos. You can also connect an NVIDIA card via USB-c port to the Nuc but I haven't tried that yet. If you do, make sure you turn on UDEV in your dockerfile.template.
+
+If you can, get an NVIDIA GPU and it will make your exploration way easier if you want to run locally or push a balena docker to a device. You will have to jump through a ton of hoops and code rewrites otherwise.
+
+When you are doing exploration, Google Colab is super nice. You can hook up a rest server to it and just hit your endpoints there. Granted you have to have the Colab running, but still, its fast for exploratory purposes.
+
+
+Thanks for showing the way internet people!
+
+- [Openai](https://openai.com/)
+- [Laion discord](https://discord.com/invite/UxX8dv5KMh)
+- [saharmor](https://github.com/saharmor/dalle-playground) 
+- [borisdayma](https://github.com/borisdayma/dalle-mini)
+
+
+### Some Images generated with [latent-diffusion](https://github.com/CompVis/latent-diffusion)
+
+OpenAI had said that many datasets had issues with women and racism. Like they would ask for a picture of a lawyer and it would only show white male lawyers. They wanted to guard against violence towards women or porn but when they skewed the training away from that it started erasing women altogether. I tried to play around with this some and found that when I precursed the text prompt with a culture and gender, it would do better. "Korean woman doctor in the garden" came out less skewed than "doctor in the garden". "Black woman software engineer driving" was better than "software engineer driving". It's lame there is a "default" human but I think we should understand there's cultural bias and strive for adding more descriptive input to sidestep that. Also, I found that the dataset did indeed erase women's bodies. Unless I specifically described clothes, like "woman wearing green shirt and black pants", it would only show pictures from the head up. It was very biased against feet. Pretty much never showed feet unless I specifically said boots or feet or socks, even if I said "woman's with whole body wearing and hat and gray dress". 
+On a lighter side, it's really fun to enter wierd mythical creature mashups.
+These images tend towards creepy and pretty entertaining.
+
+## Snowy Mountain landscape puffy clouds in the sky in the style of [Elliot Green](https://www.elliottgreen.com/)
+
+This dataset was only trained on photos wasn't able to use the Elliot Green part at all.
+
+![_0.210_00007.png](public/assets/images/ai/_0.210_00007.png)
+![_0.210_00008.png](public/assets/images/ai/_0.210_00008.png)
+![_0.211_00028.png](public/assets/images/ai/_0.211_00028.png)
+![_0.215_00002.png](public/assets/images/ai/_0.215_00002.png)
+![_0.215_00017.png](public/assets/images/ai/_0.215_00017.png)
+![_0.216_00025.png](public/assets/images/ai/_0.216_00025.png)
+![_0.221_00015.png](public/assets/images/ai/_0.221_00015.png)
+![_0.221_00018.png](public/assets/images/ai/_0.221_00018.png)
+![_0.222_00023.png](public/assets/images/ai/_0.222_00023.png)
+![_0.222_00029.png](public/assets/images/ai/_0.222_00029.png)
+![_0.224_00001.png](public/assets/images/ai/_0.224_00001.png)
+![_0.224_00011.png](public/assets/images/ai/_0.224_00011.png)
+![_0.224_00024.png](public/assets/images/ai/_0.224_00024.png)
+![_0.227_00005.png](public/assets/images/ai/_0.227_00005.png)
+![_0.227_00010.png](public/assets/images/ai/_0.227_00010.png)
+![_0.228_00026.png](public/assets/images/ai/_0.228_00026.png)
+![_0.229_00012.png](public/assets/images/ai/_0.229_00012.png)
+![_0.231_00000.png](public/assets/images/ai/_0.231_00000.png)
+![_0.232_00021.png](public/assets/images/ai/_0.232_00021.png)
+![_0.234_00003.png](public/assets/images/ai/_0.234_00003.png)
+![_0.234_00027.png](public/assets/images/ai/_0.234_00027.png)
+![_0.236_00020.png](public/assets/images/ai/_0.236_00020.png)
+![_0.238_00019.png](public/assets/images/ai/_0.238_00019.png)
+![_0.242_00014.png](public/assets/images/ai/_0.242_00014.png)
+![_0.243_00006.png](public/assets/images/ai/_0.243_00006.png)
+![_0.244_00013.png](public/assets/images/ai/_0.244_00013.png)
+![_0.246_00009.png](public/assets/images/ai/_0.246_00009.png)
+![_0.248_00016.png](public/assets/images/ai/_0.248_00016.png)
+![_0.248_00004.png](public/assets/images/ai/_0.248_00004.png)
+![_0.253_00022.png](public/assets/images/ai/_0.253_00022.png)
+
+
+## a photo realistic woman wearing green shirt and pants on a horse
+
+![_progress_00000.png](public/assets/images/ai/_progress_00000.png)
+![_progress_00001.png](public/assets/images/ai/_progress_00001.png)
+![_progress_00002.png](public/assets/images/ai/_progress_00002.png)
+![_progress_00003.png](public/assets/images/ai/_progress_00003.png)
+![_progress_00004.png](public/assets/images/ai/_progress_00004.png)
+![_progress_00005.png](public/assets/images/ai/_progress_00005.png)
+![_progress_00006.png](public/assets/images/ai/_progress_00006.png)
+![_progress_00007.png](public/assets/images/ai/_progress_00007.png)
+![_progress_00008.png](public/assets/images/ai/_progress_00008.png)
+![_progress_00009.png](public/assets/images/ai/_progress_00009.png)
+![_progress_00010.png](public/assets/images/ai/_progress_00010.png)
+![_progress_00011.png](public/assets/images/ai/_progress_00011.png)
+![_progress_00012.png](public/assets/images/ai/_progress_00012.png)
+![_progress_00013.png](public/assets/images/ai/_progress_00013.png)
+![_progress_00014.png](public/assets/images/ai/_progress_00014.png)
+![_progress_00015.png](public/assets/images/ai/_progress_00015.png)
+![_progress_00016.png](public/assets/images/ai/_progress_00016.png)
+![_progress_00017.png](public/assets/images/ai/_progress_00017.png)
+![_progress_00018.png](public/assets/images/ai/_progress_00018.png)
+![_progress_00019.png](public/assets/images/ai/_progress_00019.png)
+![_progress_00020.png](public/assets/images/ai/_progress_00020.png)
+![_progress_00021.png](public/assets/images/ai/_progress_00021.png)
+![_progress_00022.png](public/assets/images/ai/_progress_00022.png)
+![_progress_00023.png](public/assets/images/ai/_progress_00023.png)
+![_progress_00024.png](public/assets/images/ai/_progress_00024.png)
+![_progress_00025.png](public/assets/images/ai/_progress_00025.png)
+![_progress_00026.png](public/assets/images/ai/_progress_00026.png)
+![_progress_00027.png](public/assets/images/ai/_progress_00027.png)
+![_progress_00028.png](public/assets/images/ai/_progress_00028.png)
+![_progress_00029.png](public/assets/images/ai/_progress_00029.png)
+	
+
+## a crowd eating spaghetti on dodecahedron kaleidoscope plate
+
+![_0.248_00028.png](public/assets/images/ai/_0.248_00028.png)
+![_0.254_00017.png](public/assets/images/ai/_0.254_00017.png)
+![_0.255_00019.png](public/assets/images/ai/_0.255_00019.png)
+![_0.256_00018.png](public/assets/images/ai/_0.256_00018.png)
+![_0.246_00015.png](public/assets/images/ai/_0.246_00015.png)
+![_0.258_00008.png](public/assets/images/ai/_0.258_00008.png)
+![_0.258_00010.png](public/assets/images/ai/_0.258_00010.png)
+![_0.260_00021.png](public/assets/images/ai/_0.260_00021.png)
+![_0.260_00027.png](public/assets/images/ai/_0.260_00027.png)
+![_0.261_00012.png](public/assets/images/ai/_0.261_00012.png)
+![_0.265_00008.png](public/assets/images/ai/_0.265_00008.png)
+![_0.266_00019.png](public/assets/images/ai/_0.266_00019.png)
+![_0.270_00022.png](public/assets/images/ai/_0.270_00022.png)
+![_0.271_00002.png](public/assets/images/ai/_0.271_00002.png)
+![_0.274_00007.png](public/assets/images/ai/_0.274_00007.png)
+![_0.278_00022.png](public/assets/images/ai/_0.278_00022.png)
+![_0.278_00025.png](public/assets/images/ai/_0.278_00025.png)
+![_0.280_00017.png](public/assets/images/ai/_0.280_00017.png)
+![_0.281_00029.png](public/assets/images/ai/_0.281_00029.png)
+![_0.282_00015.png](public/assets/images/ai/_0.282_00015.png)
+![_0.283_00004.png](public/assets/images/ai/_0.283_00004.png)
+![_0.283_00027.png](public/assets/images/ai/_0.283_00027.png)
+![_0.289_00014.png](public/assets/images/ai/_0.289_00014.png)
+![_0.289_00024.png](public/assets/images/ai/_0.289_00024.png)
+![_0.289_00026.png](public/assets/images/ai/_0.289_00026.png)
+![_0.291_00000.png](public/assets/images/ai/_0.291_00000.png)
+![_0.296_00023.png](public/assets/images/ai/_0.296_00023.png)
+![_0.298_00006.png](public/assets/images/ai/_0.298_00006.png)
+![_0.304_00020.png](public/assets/images/ai/_0.304_00020.png)
+![_0.213_00003.png](public/assets/images/ai/_0.213_00003.png)
+![_0.305_00005.png](public/assets/images/ai/_0.305_00005.png)
+![_0.220_00011.png](public/assets/images/ai/_0.220_00011.png)
+![_0.310_00001.png](public/assets/images/ai/_0.310_00001.png)
+![_0.327_00016.png](public/assets/images/ai/_0.327_00016.png)
+![_0.330_00013.png](public/assets/images/ai/_0.330_00013.png)
