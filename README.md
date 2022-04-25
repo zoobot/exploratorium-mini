@@ -75,7 +75,9 @@ tableName: 'hidolly',
 check the assets folder for the pinout diagram
 ![Raspberry Pi pinout](https://pinout.xyz/pinout/raspberrypi_3b_pinout.svg)
 
-Schematic:
+## Schematic: The Plan
+
+![Schematic](assets/schematic.png)
 
 
 ## Development
@@ -122,7 +124,7 @@ You can scp the models to the device and set up the folder as a volume. Read the
 
 
 ```
-scp -p 22 models/* <your_device_ip>:/var/lib/docker/volumes/<APP ID>_data/_data/
+scp -P 22222 logo.png root@<IP>:/var/lib/docker/volumes/<APP ID>_data/_data/
 ```
 
 - [persistent storage](https://www.balena.io/docs/learn/develop/runtime/#persistent-storage)
@@ -133,7 +135,7 @@ Some Valid ways to ssh to the device:
 ```
 balena ssh <your_device_id>.local
 balena ssh <your_device_id>.local servicename
-ssh -P 22222 <your_device_ip>
+ssh -P 22222 root@<your_device_ip>
 ```
 
 
