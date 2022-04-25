@@ -47,7 +47,7 @@ outgoingMessageSMS: 'Hi Dolly! We are generating your image: ',
 ### General
 ```
 host # This is your balena public url
-gibberishString
+gibberishString # gibberish string on endpoints, maybe it gets hacked less
 imageFolder: './public/assets/images/ai/',
 ```
 
@@ -61,15 +61,15 @@ tableName: 'hidolly',
 
 ## Software
 
-[Web Speech Api](https://wicg.github.io/speech-api/)
-[Google Web Speech demo](https://www.google.com/chrome/demos/speech.html)
-[Google colab](https://colab.research.google.com/notebooks/welcome.ipynb)
-[OpenAI](https://openai.com/blog/dall-e/)
+- [Web Speech Api](https://wicg.github.io/speech-api/)
+- [Google Web Speech demo](https://www.google.com/chrome/demos/speech.html)
+- [Google colab](https://colab.research.google.com/notebooks/welcome.ipynb)
+- [OpenAI](https://openai.com/blog/dall-e/)
 
 ## Assembly
 
 check the assets folder for the pinout diagram
-[Raspberry Pi pinout](https://pinout.xyz/pinout/raspberrypi_3b_pinout.svg)
+![Raspberry Pi pinout](https://pinout.xyz/pinout/raspberrypi_3b_pinout.svg)
 
 Schematic:
 
@@ -96,6 +96,47 @@ yarn install
 nodemon server/index.js localhost
 ```
 
-Setup google colab:
+Setup the DALLE-mini playground for a fast pickup starter backend
 
-[DALLE-mini](https://colab.research.google.com/drive/1JXL17AycxEkLHQz0vUzfScidVURfeyhD)
+- [DALLE-mini colab backend](https://colab.research.google.com/drive/1JXL17AycxEkLHQz0vUzfScidVURfeyhD)
+- [dalle-playground](https://github.com/zoobot/dalle-playground)
+
+
+
+## Gotchas
+
+### Config files! 
+
+You will need the config.js as an exported object in your server folder. Its godd to read up on balena configs because it's not entirely straightforward.
+
+Basically the balena.yml is a config file that will replace configs and envs when you deploy from hub. It does not work on cli at this time so you'd need to either put the configs in your docker-compose environment or make the config.js.
+
+You can manually add, remove, change envs from the CLI but you cannot change the config.txt via CLI. You have to do it in the cloud on the device. This can definitely cause slow development for displays as you have to wait for the whole device to rebuild on change. You can edit the config.txt when sd is attached for etching.
+
+You can also ssh into the balena os and check the config.txt at /mnt/boot. It's not editable though as it will get written over by the cloud config. I believe the order of precidence is balena.yml(if you deployed with the deploy button), then cloud config.
+
+```
+balena ssh localip
+cat /mnt/boot/config.txt
+```
+
+[balena cli envs](https://www.balena.io/docs/reference/balena-cli/#envs)
+
+[raspberry pi config.txt](https://www.raspberrypi.com/documentation/computers/config_txt.html)
+
+
+### GPU/NVIDIA
+
+Most image generation and ai in general is run on GPUs using NVidia's Cuda. Almost all open source projects are using cuda, few have a CPU fallback and if they do, it's slow. The M1 is supposed to be faster for machine learning projects but the code bases out there have not really caught up. For the Intel NUC, you can use OpenGL but it'll require a bunch of code changes for most DALLE offshoot repos. You can also connect an NVIDIA card via USB-c port to the Nuc but I haven't tried that yet. If you do, make sure you turn on UDEV in your dockerfile.template.
+
+If you can, get an NVIDIA GPU and it will make your exploration way easier if you want to run locally or push a balena docker to a device. You will have to jump through a ton of hoops and code rewrites otherwise.
+
+When you are doing exploration, Google Colab is super nice. You can hook up a rest server to it and just hit your endpoints there. Granted you have to have the Colab running, but still, its fast for exploratory purposes.
+
+
+Thanks for showing the way internet people!
+
+- [Openai](https://openai.com/)
+- [Laion discord](https://discord.com/invite/UxX8dv5KMh)
+- [saharmor](https://github.com/saharmor/dalle-playground) 
+- [borisdayma](https://github.com/borisdayma/dalle-mini)
