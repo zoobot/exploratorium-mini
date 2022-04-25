@@ -9,7 +9,7 @@ The idea for residency to have a mini Exploratorium art generator that is voice 
 This project was part of my Balena onboarding residency. Phil easily convinced me to do something fun with art, goofing around, researching, and learning new stuff. I hadn't played with all the AI art generators so I wanted to learn more about them. DALLE2 exploded when I was in the middle of my residency and the art generators have gotten really great.
 The datasets for image generation have been gathered from all around the web, generally already tagged with text description during day to day human internet usage like the images on wikipedia. When you enter a text prompt for what image you want, OpenAI has what's called CLIP which ranks the images as to how likely they are actually what the text prompt is. It goes through many iterations until it generates the best image.
 
-![HiDolly](logo.png)
+![HiDolly](https://raw.githubusercontent.com/zoobot/hidolly/main/logo.png)
 
 ### What you will need:
 - [Raspberry Pi](https://www.aliexpress.com/item/4000130040254.html?key=a7e37b5f6ff1de9cb410158b1013e54a&prodOvrd=RAC&opt=false&aff_fcid=4d2d920f11ef4078804fb898b3aa854b-1638805157605-08626-_9xk30H&tt=CPS_NORMAL&aff_fsk=_9xk30H&aff_platform=shareComponent-detail&sk=_9xk30H&aff_trace_key=4d2d920f11ef4078804fb898b3aa854b-1638805157605-08626-_9xk30H&terminal_id=5408ef9d287140f483e79c70c12dadf0)
