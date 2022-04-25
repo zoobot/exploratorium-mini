@@ -2,14 +2,18 @@
 
 ## First Round Mini Exploratorium
 
+![Mini Exploratorium](https://raw.githubusercontent.com/zoobot/hidolly/main/logo.png)
+
 ## Intro
 
-The idea for residency to have a mini Exploratorium art generator that is voice activated when someone walks up and motion's detected.
+The idea for this [Balena Labs](https://github.com/balenalabs) residency is to have a mini Exploratorium art generator that is voice activated when someone walks up and motion's detected.
 
-This project was part of my Balena onboarding residency. Phil easily convinced me to do something fun with art, goofing around, researching, and learning new stuff. I hadn't played with all the AI art generators so I wanted to learn more about them. DALLE2 exploded when I was in the middle of my residency and the art generators have gotten really great.
+This project was part of an onboarding residency for my new job at [Balena](https://balena.io). [Phil](https://github.com/phil-d-wilson) easily convinced me to do something fun with art, goofing around, researching, and learning new stuff. I hadn't played with all the AI art generators so I wanted to learn more about them. DALLE2 exploded when I was in the middle of my residency and the art generators have gotten really great.
 The datasets for image generation have been gathered from all around the web, generally already tagged with text description during day to day human internet usage like the images on wikipedia. When you enter a text prompt for what image you want, OpenAI has what's called CLIP which ranks the images as to how likely they are actually what the text prompt is. It goes through many iterations until it generates the best image.
 
-![HiDolly](https://raw.githubusercontent.com/zoobot/hidolly/main/logo.png)
+![HiDolly](assets/hidolly.png)
+
+Thanks [nucleardreamer](https://github.com/nucleardreamer) for being my guide through the residency! 
 
 ### What you will need:
 - [Raspberry Pi](https://www.aliexpress.com/item/4000130040254.html?key=a7e37b5f6ff1de9cb410158b1013e54a&prodOvrd=RAC&opt=false&aff_fcid=4d2d920f11ef4078804fb898b3aa854b-1638805157605-08626-_9xk30H&tt=CPS_NORMAL&aff_fsk=_9xk30H&aff_platform=shareComponent-detail&sk=_9xk30H&aff_trace_key=4d2d920f11ef4078804fb898b3aa854b-1638805157605-08626-_9xk30H&terminal_id=5408ef9d287140f483e79c70c12dadf0)
@@ -135,9 +139,13 @@ ssh -P 22222 <your_device_ip>
 
 ### Config files! 
 
-You will need the config.js as an exported object in your server folder. Its godd to read up on balena configs because it's not entirely straightforward.
+For Balena, there's configs and environment variables. What's the difference?
+Its good to read up on balena configs because it's not entirely straightforward.
 
-Basically the balena.yml is a config file that will replace configs and envs when you deploy from hub. It does not work on cli at this time so you'd need to either put the configs in your docker-compose environment or make the config.js.
+Basically the balena.yml is a config file that will replace configs and envs when you deploy from hub. It does not work on cli at this time so you'd need to either put the configs in your docker-compose environment or for this specific project, create the config.js.
+```
+touch server/config.js
+```
 
 You can manually add, remove, change envs from the CLI but you cannot change the config.txt via CLI. You have to do it in the cloud on the device. This can definitely cause slow development for displays as you have to wait for the whole device to rebuild on change. You can edit the config.txt when sd is attached for etching.
 
@@ -155,24 +163,34 @@ cat /mnt/boot/config.txt
 
 ### GPU/NVIDIA
 
-Most image generation and ai in general is run on GPUs using NVidia's Cuda. Almost all open source projects are using cuda, few have a CPU fallback and if they do, it's slow. The M1 is supposed to be faster for machine learning projects but the code bases out there have not really caught up. For the Intel NUC, you can use OpenGL but it'll require a bunch of code changes for most DALLE offshoot repos. You can also connect an NVIDIA card via USB-c port to the Nuc but I haven't tried that yet. If you do, make sure you turn on UDEV in your dockerfile.template.
+Most image generation and ai in general is run on GPUs using NVidia's Cuda. Almost all open source projects are using cuda, few have a CPU fallback and if they do, it's slow. The M1 is supposed to be faster for machine learning projects but the code bases out there have not really caught up. For the Intel NUC, you can use OpenCV but it'll require a bunch of code changes for most DALLE offshoot repos. You can also connect an NVIDIA card via USB-c port to the Nuc but I haven't tried that yet. If you do, make sure you turn on UDEV in your dockerfile.template.
 
 If you can, get an NVIDIA GPU and it will make your exploration way easier if you want to run locally or push a balena docker to a device. You will have to jump through a ton of hoops and code rewrites otherwise.
 
 When you are doing exploration, Google Colab is super nice. You can hook up a rest server to it and just hit your endpoints there. Granted you have to have the Colab running, but still, its fast for exploratory purposes.
 
+### PYTHON
+
+For raspberry pi devices, expect to bang your head against python 2 and 3 library support. I spent a good amount of time mashing keyboard and staring at the dockers building to get just the right python library installed in a very specific order and combination for balena images. Just keep at it, and if its 3am, day 17 of library confusion, might be worth solving your issue in a different way. That being said, you are going to need to use Python to absorb all the awesome generative code bases, so make sure you solve your issue in a different way using Python. AI researchers use python. :)
+
+
+## Thanks
 
 Thanks for showing the way internet people!
 
 - [Openai](https://openai.com/)
 - [Laion discord](https://discord.com/invite/UxX8dv5KMh)
+- [Katherine Crowson](https://github.com/crowsonkb)
 - [saharmor](https://github.com/saharmor/dalle-playground) 
 - [borisdayma](https://github.com/borisdayma/dalle-mini)
+ 
+many more thanks to come
 
+## Output
 
 ### Some Images generated with [latent-diffusion](https://github.com/CompVis/latent-diffusion)
 
-OpenAI had said that many datasets had issues with women and racism. Like they would ask for a picture of a lawyer and it would only show white male lawyers. They wanted to guard against violence towards women or porn but when they skewed the training away from that it started erasing women altogether. I tried to play around with this some and found that when I precursed the text prompt with a culture and gender, it would do better. "Korean woman doctor in the garden" came out less skewed than "doctor in the garden". "Black woman software engineer driving" was better than "software engineer driving". It's lame there is a "default" human but I think we should understand there's cultural bias and strive for adding more descriptive input to sidestep that. Also, I found that the dataset did indeed erase women's bodies. Unless I specifically described clothes, like "woman wearing green shirt and black pants", it would only show pictures from the head up. It was very biased against feet. Pretty much never showed feet unless I specifically said boots or feet or socks, even if I said "woman's with whole body wearing and hat and gray dress". 
+OpenAI had said that many datasets had issues with women and racism. Like they would ask for a picture of a lawyer and it would only show white male lawyers. They wanted to guard against violence towards women or porn but when they skewed the training away from that it started erasing women altogether. I tried to play around with this some and found that when I precursed the text prompt with a culture and gender, it would do better. "Korean woman doctor in the garden" came out less skewed than "doctor in the garden". "Black woman software engineer driving" was better than "software engineer driving". It's lame there is a "default" human but I think we should understand there's cultural bias and strive for adding more descriptive input to sidestep that. Also, I found that the dataset did indeed erase women's bodies. Unless I specifically described clothes, like "woman wearing green shirt and black pants", it would only show pictures from the head up. It was very biased against feet. Pretty much never showed feet unless I specifically said boots or feet or socks, even if I said "woman's whole body wearing hat and gray dress". 
 On a lighter side, it's really fun to enter wierd mythical creature mashups.
 These images tend towards creepy and pretty entertaining.
 
