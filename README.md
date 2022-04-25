@@ -144,7 +144,9 @@ Thanks for showing the way internet people!
 
 ### Some Images generated with [latent-diffusion](https://github.com/CompVis/latent-diffusion)
 
-## Snowy Mountain landscape puffy clouds in the sky in the style of Elliot Green
+## Snowy Mountain landscape puffy clouds in the sky in the style of [Elliot Green](https://www.elliottgreen.com/)
+
+This dataset was only trained on photos wasn't able to use the Elliot Green part at all.
 
 ![_0.210_00007.png](public/assets/images/ai/_0.210_00007.png)
 ![_0.210_00008.png](public/assets/images/ai/_0.210_00008.png)
