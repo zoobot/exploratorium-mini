@@ -29,6 +29,7 @@
 ![_0.246_00009.png](_0.246_00009.png)
 ![_0.248_00016.png](_0.248_00016.png)
 ![_0.248_00004.png](_0.248_00004.png)
+![_0.253_00022.png](_0.253_00022.png)
 
 
 ## a photo realistic woman wearing green shirt and pants on a horse
@@ -65,10 +66,9 @@
 ![_progress_00029.png](_progress_00029.png)
 	
 
-## Woman eating spaghetti on a dodecahedron kaleidoscope plate
+## a crowd eating spaghetti on dodecahedron kaleidoscope plate
 
 ![_0.248_00028.png](_0.248_00028.png)
-![_0.253_00022.png](_0.253_00022.png)
 ![_0.254_00017.png](_0.254_00017.png)
 ![_0.255_00019.png](_0.255_00019.png)
 ![_0.256_00018.png](_0.256_00018.png)
