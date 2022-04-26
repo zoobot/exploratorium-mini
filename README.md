@@ -72,8 +72,10 @@ tableName: 'hidolly',
 
 ## Assembly
 
-check the assets folder for the pinout diagram
-![Raspberry Pi pinout](https://pinout.xyz/pinout/raspberrypi_3b_pinout.svg)
+
+1. Plug in the USB battery to the Pi
+[Raspberry Pi pinout](https://pinout.xyz/)
+2. Plug in the PIR motion sensor to the Pi
 
 ## Schematic: The Plan
 
@@ -185,6 +187,7 @@ Thanks for showing the way internet people!
 - [Katherine Crowson](https://github.com/crowsonkb)
 - [saharmor](https://github.com/saharmor/dalle-playground) 
 - [borisdayma](https://github.com/borisdayma/dalle-mini)
+- [laion.ai](https://knn5.laion.ai/)
  
 many more thanks to come
 
