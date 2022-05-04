@@ -116,6 +116,10 @@ Setup the DALLE-mini playground for a fast pickup starter backend
 - [dall-3](https://dall-3.com/models/)
 - [latent-diffusion](http://ommer-lab.com/files/latent-diffusion/)
 
+## Papers
+
+- [turing-nlg](https://www.microsoft.com/en-us/research/blog/turing-nlg-a-17-billion-parameter-language-model-by-microsoft/)
+
 ## Gotchas
 
 ### Models on a device
@@ -146,6 +150,19 @@ ssh -P 22222 root@<your_device_ip>
 For Balena, there's configs and environment variables. What's the difference?
 Its good to read up on balena configs because it's not entirely straightforward.
 
+[balena cli envs](https://www.balena.io/docs/reference/balena-cli/#envs)
+
+[raspberry pi config.txt](https://www.raspberrypi.com/documentation/computers/config_txt.html)
+
+[local-configure-target](https://www.balena.io/docs/reference/balena-cli/#local-configure-target)
+
+[configuration](https://www.balena.io/docs/reference/OS/configuration/)
+
+[OS/advanced](https://www.balena.io/docs/reference/OS/advanced/)
+
+[how-to-set-config-txt-vars-without-fleet-device-cloud-configuration](https://forums.balena.io/t/how-to-set-config-txt-vars-without-fleet-device-cloud-configuration/)
+
+
 Basically the balena.yml is a config file that will replace configs and envs when you deploy from hub. It does not work on cli at this time so you'd need to either put the configs in your docker-compose environment or for this specific project, create the config.js.
 ```
 touch server/config.js
@@ -159,11 +176,6 @@ You can also ssh into the balena os and check the config.txt at /mnt/boot. It's 
 balena ssh localip
 cat /mnt/boot/config.txt
 ```
-
-[balena cli envs](https://www.balena.io/docs/reference/balena-cli/#envs)
-
-[raspberry pi config.txt](https://www.raspberrypi.com/documentation/computers/config_txt.html)
-
 
 ### GPU/NVIDIA
 
@@ -188,6 +200,7 @@ Thanks for showing the way internet people!
 - [saharmor](https://github.com/saharmor/dalle-playground) 
 - [borisdayma](https://github.com/borisdayma/dalle-mini)
 - [laion.ai](https://knn5.laion.ai/)
+- [DeepSpeed](https://github.com/EleutherAI/DeeperSpeed)
  
 many more thanks to come
 
