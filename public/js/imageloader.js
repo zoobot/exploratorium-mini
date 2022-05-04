@@ -53,7 +53,7 @@ const options = ((source, final_transcript, numImages) => {
 setEndpoint = (source) => {
   return {
     local: new URL('images/CBI1-Thrav2EDPAyAGo2Cg', window.location),
-    dalle: 'https://rude-cougar-7.loca.lt/dalle',
+    dalle: 'https://cold-clocks-wave-35-229-140-35.loca.lt/dalle',
   }[source]
 }
 

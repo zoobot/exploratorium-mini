@@ -81,6 +81,8 @@ tableName: 'hidolly',
 
 ![Schematic](assets/schematic.png)
 
+[Schematic](https://docs.google.com/drawings/d/11IcMJmlmaEUsNaW8wVLDBWgtVw_P4dC0u0-IwSdXxZE/edit)
+
 
 ## Development
 
