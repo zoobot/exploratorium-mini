@@ -15,6 +15,7 @@ myWebSocket.onmessage = (event) => {
         }
         if (motion) {
             console.log('event motion', motion)
+            location.reload();
             startButton({timeStamp})
         }
     }

@@ -2,8 +2,46 @@ version: '2.1'
 
 volumes:
     data:
+    # x11:
+    settings:  
 
 services:
+  # fbcp:
+  #   image: bhcr.io/balenablocks/fbcp
+  #   privileged: true
+  #   environment:
+  #     - BALENA_HOST_CONFIG_hdmi_cvt=800 400 60 6 0 0 0
+  #     - BALENA_HOST_CONFIG_hdmi_force_hotplug=1
+  #     - BALENA_HOST_CONFIG_hdmi_group=2
+  #     - BALENA_HOST_CONFIG_hdmi_mode=87
+  # xserver:
+  #   image: balenablocks/xserver
+  #   restart: always
+  #   privileged: true
+  #   volumes:
+  #     - 'x11:/tmp/.X11-unix'
+  #   # environment:
+  #   #   - DISPLAY_ORIENTATION=normal
+  #   #   - DISPLAY_RESOLUTION=800x400
+  #   #   - DISPLAY_DPI=6
+  #   #   - DISPLAY_RATE=60
+  #   #   - DISPLAY_ROTATE_TOUCH=normal
+  #     # - LAUNCH_URL=
+  #     # - FORCE_DISPLAY=0
+  browser:
+    build: ./browser
+    privileged: true # required for UDEV to find plugged in peripherals such as a USB mouse
+    network_mode: host
+    volumes:
+      - 'settings:/data' # Only required if using PERSISTENT flag (see below)
+    environment:
+      # - LAUNCH_URL=http://youtube.com
+      - LOCAL_HTTP_DELAY=15
+      - KIOSK=1
+      - SHOW_CURSOR=0
+      - ROTATE_DISPLAY=normal
+      - ENABLE_GPU=1
+      - WINDOW_SIZE=800,480
   twilio-block:
     container_name: twilio-block
     build: ./
@@ -18,11 +56,4 @@ services:
       - "80:3003" # external/internal, remember right to left
     volumes:
       - 'data:/data'
-  fbcp:
-    image: bhcr.io/balenablocks/fbcp
-    privileged: true
-    environment:
-      - BALENA_HOST_CONFIG_hdmi_cvt=800 400 60 6 0 0 0
-      - BALENA_HOST_CONFIG_hdmi_force_hotplug=1
-      - BALENA_HOST_CONFIG_hdmi_group=2
-      - BALENA_HOST_CONFIG_hdmi_mode=87
+

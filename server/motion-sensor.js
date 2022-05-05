@@ -1,3 +1,6 @@
+// const { promisify } = require('util');
+// const exec = promisify(require('child_process').exec);
+const { exec } = require('child_process');
 function motionSensor(wsServer) {
 
   const Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
@@ -21,7 +24,25 @@ function motionSensor(wsServer) {
           motion: value,
           timeStamp: new Date().toISOString(),
         })))
-      };
+        
+        // exec('echo -n 1 > /sys/class/backlight/rpi_backlight/bl_power', (err, stdout, stderr) => {
+        //   if (err) {
+        //     console.error(err)
+        //   } else {
+        //   console.log(`stdout: ${stdout}`);
+        //   console.log(`stderr: ${stderr}`);
+        //   }
+        // });
+      } else {
+        // exec('echo -n 0 > /sys/class/backlight/rpi_backlight/bl_power', (err, stdout, stderr) => {
+        //   if (err) {
+        //     console.error(err)
+        //   } else {
+        //   console.log(`stdout: ${stdout}`);
+        //   console.log(`stderr: ${stderr}`);
+        //   }
+        // });
+      }
     });  
   });
 
